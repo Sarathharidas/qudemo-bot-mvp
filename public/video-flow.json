@@ -1,0 +1,27 @@
+{
+  "videos": [
+    {
+      "id": "video_1",
+      "src": "/videos/video_1.mp4",
+      "nextQuestion": {
+        "id": "question_1",
+        "text": "Thanks, Jazeem! What exactly is Qudemo?",
+        "nextVideo": "video_2"
+      }
+    },
+    {
+      "id": "video_2",
+      "src": "/videos/video_2.mp4",
+      "nextQuestion": {
+        "id": "question_2",
+        "text": "Oh, interesting! So how is this different from a regular demo video?",
+        "nextVideo": "video_3"
+      }
+    },
+    {
+      "id": "video_3",
+      "src": "/videos/video_3.mp4",
+      "nextQuestion": null
+    }
+  ]
+}
