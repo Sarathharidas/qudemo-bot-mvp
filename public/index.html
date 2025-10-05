@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qudemo Video Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="video-container">
+            <video id="videoPlayer" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="play-button-overlay" id="playButtonOverlay">
+                <button class="play-button" id="playButton">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="question-overlay" id="questionOverlay" style="display: none;">
+                <div class="question-box">
+                    <button id="questionButton" class="question-btn">
+                        <span id="questionText"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="video-counter">
+                <span id="currentVideo">1</span> / <span id="totalVideos">3</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
