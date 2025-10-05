@@ -47,7 +47,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 5;
+    z-index: 1001;
     pointer-events: none;
 }
 
@@ -85,8 +85,9 @@ body {
     bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
+    z-index: 1000;
     max-width: 80%;
+    pointer-events: auto;
 }
 
 .question-box {
@@ -134,7 +135,7 @@ body {
     padding: 8px 12px;
     border-radius: 20px;
     color: white;
-    z-index: 15;
+    z-index: 1002;
 }
 
 .progress-bar {
@@ -186,20 +187,27 @@ body {
     }
     
     .question-overlay {
-        bottom: 50px;
-        max-width: 85%;
+        bottom: 40px;
+        max-width: 90%;
+        z-index: 1000;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .question-btn {
-        padding: 10px 16px;
+        padding: 12px 18px;
         font-size: 0.9rem;
-        max-width: 280px;
+        max-width: 300px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.5);
     }
     
     .progress-container {
         top: 10px;
         right: 10px;
         padding: 6px 10px;
+        z-index: 1002;
     }
     
     .progress-bar {
@@ -214,11 +222,38 @@ body {
     .play-button {
         width: 60px;
         height: 60px;
+        z-index: 1001;
     }
     
     .play-button svg {
         width: 40px;
         height: 40px;
+    }
+}
+
+/* Mobile fullscreen specific styles */
+@media (max-width: 480px) {
+    .question-overlay {
+        bottom: 20px;
+        max-width: 95%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        position: fixed;
+    }
+    
+    .question-btn {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+        max-width: 320px;
+        border-radius: 12px;
+    }
+    
+    .progress-container {
+        top: 5px;
+        right: 5px;
+        padding: 4px 8px;
+        font-size: 0.7rem;
     }
 }
 

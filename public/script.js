@@ -71,6 +71,15 @@ class VideoChatApp {
             this.showPlayButton();
         });
         
+        // Handle mobile fullscreen events
+        this.videoPlayer.addEventListener('webkitfullscreenchange', () => {
+            this.handleFullscreenChange();
+        });
+        
+        this.videoPlayer.addEventListener('fullscreenchange', () => {
+            this.handleFullscreenChange();
+        });
+        
         // Video error handling is now handled in playVideo method
     }
     
@@ -174,6 +183,24 @@ class VideoChatApp {
     
     hidePlayButton() {
         this.playButtonOverlay.style.display = 'none';
+    }
+    
+    handleFullscreenChange() {
+        const isFullscreen = !!(document.fullscreenElement || 
+                               document.webkitFullscreenElement || 
+                               document.mozFullScreenElement || 
+                               document.msFullscreenElement);
+        
+        if (isFullscreen) {
+            // In fullscreen, ensure overlays are visible
+            this.questionOverlay.style.position = 'fixed';
+            this.questionOverlay.style.zIndex = '1000';
+            this.playButtonOverlay.style.zIndex = '1001';
+            this.progressContainer.style.zIndex = '1002';
+        } else {
+            // Exit fullscreen, reset positioning
+            this.questionOverlay.style.position = 'absolute';
+        }
     }
     
     onQuestionClicked() {
