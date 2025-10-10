@@ -22,25 +22,38 @@ app.get('/api/video-flow', (req, res) => {
             {
                 id: 'video_1',
                 src: '/videos/video_1.mp4',
-                nextQuestion: {
-                    id: 'question_1',
-                    text: 'Thanks, Jazeem! What exactly is Qudemo?',
-                    nextVideo: 'video_2'
-                }
+                nextQuestions: [
+                    {
+                        id: 'question_1',
+                        text: 'What is Qudemo?',
+                        nextVideo: 'video_2'
+                    },
+                    {
+                        id: 'question_2',
+                        text: 'How does Qudemo work?',
+                        nextVideo: 'video_3'
+                    },
+                    {
+                        id: 'question_3',
+                        text: 'Who is Qudemo for?',
+                        nextVideo: 'video_4'
+                    }
+                ]
             },
             {
                 id: 'video_2',
                 src: '/videos/video_2.mp4',
-                nextQuestion: {
-                    id: 'question_2',
-                    text: 'Oh, interesting! So how is this different from a regular demo video?',
-                    nextVideo: 'video_3'
-                }
+                nextQuestions: null // Can add more questions here if needed
             },
             {
                 id: 'video_3',
                 src: '/videos/video_3.mp4',
-                nextQuestion: null // Last video
+                nextQuestions: null // Can add more questions here if needed
+            },
+            {
+                id: 'video_4',
+                src: '/videos/video_4.mp4',
+                nextQuestions: null // Last video
             }
         ]
     };
@@ -51,7 +64,8 @@ app.get('/api/video-flow', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log('Make sure to place your video files in the videos/ directory:');
-    console.log('- video_1.mp4');
-    console.log('- video_2.mp4');
-    console.log('- video_3.mp4');
+    console.log('- video_1.mp4 (intro video)');
+    console.log('- video_2.mp4 (What is Qudemo?)');
+    console.log('- video_3.mp4 (How does Qudemo work?)');
+    console.log('- video_4.mp4 (Who is Qudemo for?)');
 });

@@ -19,10 +19,70 @@ body {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    max-width: 800px;
-    width: 50%;
-    min-width: 600px;
+    max-width: 1400px;
+    width: 90%;
+    min-width: 800px;
     position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.sidebar {
+    width: 350px;
+    background: #f8f9fa;
+    padding: 30px 20px;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #2196F3;
+}
+
+.suggested-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggested-question-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    padding: 14px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.suggested-question-btn:hover {
+    background: #2196F3;
+    color: white;
+    border-color: #2196F3;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.suggested-question-btn:active {
+    transform: translateX(3px);
 }
 
 .video-container {
@@ -92,6 +152,10 @@ body {
 .question-box {
     max-width: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
 }
 
 .question-btn {
@@ -108,8 +172,8 @@ body {
     box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
     text-align: center;
     display: block;
-    margin: 0 auto;
     max-width: 400px;
+    width: 100%;
     word-wrap: break-word;
 }
 
@@ -162,8 +226,12 @@ body {
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
-        width: 70%;
-        min-width: 500px;
+        width: 95%;
+        min-width: 600px;
+    }
+    
+    .sidebar {
+        width: 300px;
     }
     
     #videoPlayer {
@@ -175,14 +243,33 @@ body {
 @media (max-width: 768px) {
     body {
         justify-content: center;
+        padding: 10px;
     }
     
     .container {
         margin: 10px;
         border-radius: 15px;
-        width: 90%;
-        max-width: 400px;
+        width: 95%;
+        max-width: 100%;
         min-width: 300px;
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #e0e0e0;
+        padding: 20px 15px;
+    }
+    
+    .sidebar-title {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .suggested-question-btn {
+        padding: 12px 14px;
+        font-size: 0.9rem;
     }
     
     .question-overlay {

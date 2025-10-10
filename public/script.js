@@ -2,15 +2,16 @@ class VideoChatApp {
     constructor() {
         this.videoPlayer = document.getElementById('videoPlayer');
         this.questionOverlay = document.getElementById('questionOverlay');
-        this.questionText = document.getElementById('questionText');
-        this.questionButton = document.getElementById('questionButton');
+        this.questionBox = document.getElementById('questionBox');
         this.playButtonOverlay = document.getElementById('playButtonOverlay');
         this.playButton = document.getElementById('playButton');
         this.progressFill = document.getElementById('progressFill');
         this.currentVideoSpan = document.getElementById('currentVideo');
         this.totalVideosSpan = document.getElementById('totalVideos');
+        this.suggestedQuestionsContainer = document.getElementById('suggestedQuestions');
         
         this.videoFlow = null;
+        this.suggestedQuestions = null;
         this.currentVideoIndex = 0;
         this.isQuestionVisible = false;
         
@@ -19,8 +20,12 @@ class VideoChatApp {
     
     async init() {
         try {
-            await this.loadVideoFlow();
+            await Promise.all([
+                this.loadVideoFlow(),
+                this.loadSuggestedQuestions()
+            ]);
             this.setupEventListeners();
+            this.renderSuggestedQuestions();
             // Add a small delay to ensure DOM is fully ready
             setTimeout(() => {
                 this.startVideoFlow();
@@ -32,7 +37,7 @@ class VideoChatApp {
     }
     
     async loadVideoFlow() {
-        const response = await fetch('/video-flow.json');
+        const response = await fetch('/api/video-flow');
         if (!response.ok) {
             throw new Error('Failed to fetch video flow');
         }
@@ -40,15 +45,54 @@ class VideoChatApp {
         this.totalVideosSpan.textContent = this.videoFlow.videos.length;
     }
     
+    async loadSuggestedQuestions() {
+        const response = await fetch('/suggested-questions.json');
+        if (!response.ok) {
+            throw new Error('Failed to fetch suggested questions');
+        }
+        this.suggestedQuestions = await response.json();
+    }
+    
+    renderSuggestedQuestions() {
+        if (!this.suggestedQuestions || !this.suggestedQuestions.questions) {
+            return;
+        }
+        
+        // Clear any existing questions
+        this.suggestedQuestionsContainer.innerHTML = '';
+        
+        // Create a button for each suggested question
+        this.suggestedQuestions.questions.forEach(question => {
+            const button = document.createElement('button');
+            button.className = 'suggested-question-btn';
+            button.textContent = question.text;
+            button.setAttribute('data-video-id', question.videoId);
+            button.addEventListener('click', () => {
+                this.onSuggestedQuestionClicked(question.videoId);
+            });
+            this.suggestedQuestionsContainer.appendChild(button);
+        });
+    }
+    
+    onSuggestedQuestionClicked(videoId) {
+        // Find the video index based on video ID
+        const videoIndex = this.videoFlow.videos.findIndex(
+            video => video.id === videoId
+        );
+        
+        if (videoIndex !== -1) {
+            this.playVideo(videoIndex);
+        } else {
+            // Video not found yet - show a message
+            console.log(`Video ${videoId} will be available soon`);
+            alert('This video will be available soon! We are still creating content for this question.');
+        }
+    }
+    
     setupEventListeners() {
         // Video ended event
         this.videoPlayer.addEventListener('ended', () => {
             this.onVideoEnded();
-        });
-        
-        // Question button click
-        this.questionButton.addEventListener('click', () => {
-            this.onQuestionClicked();
         });
         
         // Play button click
@@ -147,21 +191,32 @@ class VideoChatApp {
     onVideoEnded() {
         const currentVideo = this.videoFlow.videos[this.currentVideoIndex];
         
-        if (currentVideo.nextQuestion) {
-            this.showQuestion(currentVideo.nextQuestion);
+        if (currentVideo.nextQuestions && currentVideo.nextQuestions.length > 0) {
+            this.showQuestions(currentVideo.nextQuestions);
         } else {
             // Last video completed
             this.showCompletion();
         }
     }
     
-    showQuestion(question) {
+    showQuestions(questions) {
         this.isQuestionVisible = true;
-        this.questionText.textContent = question.text;
-        this.questionOverlay.style.display = 'block';
         
-        // Store next video info for when question is clicked
-        this.nextVideoId = question.nextVideo;
+        // Clear previous questions
+        this.questionBox.innerHTML = '';
+        
+        // Create a button for each question
+        questions.forEach(question => {
+            const button = document.createElement('button');
+            button.className = 'question-btn';
+            button.textContent = question.text;
+            button.addEventListener('click', () => {
+                this.onQuestionClicked(question.nextVideo);
+            });
+            this.questionBox.appendChild(button);
+        });
+        
+        this.questionOverlay.style.display = 'block';
     }
     
     hideQuestion() {
@@ -179,12 +234,12 @@ class VideoChatApp {
     
     
     
-    onQuestionClicked() {
-        if (!this.nextVideoId) return;
+    onQuestionClicked(nextVideoId) {
+        if (!nextVideoId) return;
         
         // Find next video index
         const nextVideoIndex = this.videoFlow.videos.findIndex(
-            video => video.id === this.nextVideoId
+            video => video.id === nextVideoId
         );
         
         if (nextVideoIndex !== -1) {
@@ -201,8 +256,13 @@ class VideoChatApp {
     }
     
     showError(message) {
-        this.questionText.textContent = `⚠️ Error: ${message}`;
-        this.questionButton.onclick = () => location.reload();
+        this.questionBox.innerHTML = '';
+        const errorButton = document.createElement('button');
+        errorButton.className = 'question-btn';
+        errorButton.style.background = '#f44336';
+        errorButton.textContent = `⚠️ Error: ${message}`;
+        errorButton.onclick = () => location.reload();
+        this.questionBox.appendChild(errorButton);
         this.questionOverlay.style.display = 'block';
     }
 }

@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is Qudemo?",
+      "videoId": "video_placeholder_1"
+    },
+    {
+      "id": "q2",
+      "text": "How does Qudemo work?",
+      "videoId": "video_placeholder_2"
+    },
+    {
+      "id": "q3",
+      "text": "Who is Qudemo for?",
+      "videoId": "video_placeholder_3"
+    },
+    {
+      "id": "q4",
+      "text": "How is it different from a regular demo video?",
+      "videoId": "video_placeholder_4"
+    },
+    {
+      "id": "q5",
+      "text": "Does it help sales teams too?",
+      "videoId": "video_placeholder_5"
+    },
+    {
+      "id": "q6",
+      "text": "What kind of videos can I use?",
+      "videoId": "video_placeholder_6"
+    },
+    {
+      "id": "q7",
+      "text": "Can I embed Qudemo or share it?",
+      "videoId": "video_placeholder_7"
+    }
+  ]
+}
+
