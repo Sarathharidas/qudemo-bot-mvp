@@ -1,0 +1,10 @@
+# Don't redirect JSON files
+/video-flow.json /video-flow.json 200
+/suggested-questions.json /suggested-questions.json 200
+
+# Don't redirect video files
+/videos/* /videos/:splat 200
+
+# SPA fallback for everything else
+/* /index.html 200
+

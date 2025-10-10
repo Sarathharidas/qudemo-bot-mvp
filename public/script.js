@@ -37,7 +37,7 @@ class VideoChatApp {
     }
     
     async loadVideoFlow() {
-        const response = await fetch('/api/video-flow');
+        const response = await fetch('/video-flow.json');
         if (!response.ok) {
             throw new Error('Failed to fetch video flow');
         }

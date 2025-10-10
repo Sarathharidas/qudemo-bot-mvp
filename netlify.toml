@@ -2,17 +2,22 @@
   publish = "public"
   command = "echo 'Static site - no build needed'"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/index.html"
-  status = 200
+# Serve JSON files with correct content type
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Access-Control-Allow-Origin = "*"
 
-[[redirects]]
-  from = "/videos/*"
-  to = "/videos/:splat"
-  status = 200
-
+# Serve video files with correct content type
 [[headers]]
   for = "/videos/*"
   [headers.values]
     Content-Type = "video/mp4"
+
+# SPA fallback - only for non-existent routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
