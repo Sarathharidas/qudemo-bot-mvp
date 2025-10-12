@@ -121,19 +121,8 @@ class VideoChatApp {
     
     async startVideoFlow() {
         if (this.videoFlow && this.videoFlow.videos.length > 0) {
-            // Check if first video exists before playing
-            const firstVideo = this.videoFlow.videos[0];
-            try {
-                const response = await fetch(firstVideo.src, { method: 'HEAD' });
-                if (response.ok) {
-                    this.playVideo(0);
-                } else {
-                    this.showError('Video file not found. Please check if video_1.mp4 exists in the videos/ directory.');
-                }
-            } catch (error) {
-                console.error('Error checking video file:', error);
-                this.showError('Error loading video file. Please check if video_1.mp4 exists in the videos/ directory.');
-            }
+            // Start playing the first video
+            this.playVideo(0);
         }
     }
     
