@@ -41,7 +41,28 @@
         </div>
         
         <div class="sidebar">
-            <h3 class="sidebar-title">Quick Questions</h3>
+            <h3 class="sidebar-title">Ask a Question</h3>
+            
+            <!-- Question input box -->
+            <div class="question-input-container">
+                <input 
+                    type="text" 
+                    id="questionInput" 
+                    class="question-input" 
+                    placeholder="Type your question or click the mic..."
+                />
+                <button id="voiceButton" class="voice-button" title="Voice input">
+                    🎤
+                </button>
+                <button id="askButton" class="ask-button">
+                    Ask
+                </button>
+            </div>
+            
+            <!-- Answer display -->
+            <div id="answerBox" class="answer-box" style="display: none;"></div>
+            
+            <h3 class="sidebar-title" style="margin-top: 30px;">Quick Questions</h3>
             <div id="suggestedQuestions" class="suggested-questions">
                 <!-- Questions will be dynamically added here -->
             </div>

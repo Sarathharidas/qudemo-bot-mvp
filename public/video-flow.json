@@ -23,7 +23,8 @@
           "text": "What kind of videos can I use with Qudemo?",
           "nextVideo": "video_1_3"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1.vtt"
     },
     {
       "id": "video_2",
@@ -48,7 +49,8 @@
           "text": "What's the pricing?",
           "nextVideo": "video_12"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_2.vtt"
     },
     {
       "id": "video_3",
@@ -73,7 +75,8 @@
           "text": "How does it learn over time?",
           "nextVideo": "video_18"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_3.vtt"
     },
     {
       "id": "video_1_1",
@@ -98,7 +101,8 @@
           "text": "What insights can I see?",
           "nextVideo": "video_9"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_1.vtt"
     },
     {
       "id": "video_1_2",
@@ -123,7 +127,8 @@
           "text": "Can I integrate Qudemo with other tools?",
           "nextVideo": "video_14"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_2.vtt"
     },
     {
       "id": "video_1_3",
@@ -148,133 +153,148 @@
           "text": "How secure is my data?",
           "nextVideo": "video_11"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_3.vtt"
     },
     {
       "id": "video_1_1_1",
       "title": "Does it respond in real time?",
       "heygenVideoId": "241de0e6dc404620ba70c09e87e7963c",
-      "src": "https://resource.heygen.ai/video/241de0e6dc404620ba70c09e87e7963c.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_1_1.mp4",
       "question": "Does it respond in real time?",
       "answer": "Yes, Qudemo replies instantly, just like live chat - powered by your product knowledge and video context.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_1_1.vtt"
     },
     {
       "id": "video_1_1_2",
       "title": "Can it handle complex questions?",
       "heygenVideoId": "31d824c6a6d24917b3c5127baa9f6c06",
-      "src": "https://resource.heygen.ai/video/31d824c6a6d24917b3c5127baa9f6c06.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_1_2.mp4",
       "question": "Can it handle complex questions?",
       "answer": "Absolutely. The AI combines your docs and video transcript to form context-aware answers - even for multi-step or feature-based queries.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_1_2.vtt"
     },
     {
       "id": "video_1_1_3",
       "title": "How does Qudemo find answers in videos?",
       "heygenVideoId": "ac7cc29376074f00a4c3d9a6578922c1",
-      "src": "https://resource.heygen.ai/video/ac7cc29376074f00a4c3d9a6578922c1.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_1_3.mp4",
       "question": "How does Qudemo find answers in videos?",
       "answer": "It analyses your video's transcript and maps it with your content. When a viewer asks something, it locates the right section and jumps there automatically.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_1_3.vtt"
     },
     {
       "id": "video_1_2_1",
       "title": "What kind of insights can sales teams see?",
       "heygenVideoId": "00d785d6407c45c6aaf75802b927d97c",
-      "src": "https://resource.heygen.ai/video/00d785d6407c45c6aaf75802b927d97c.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_2_1.mp4",
       "question": "What kind of insights can sales teams see?",
       "answer": "We help you to get a summary of buyer's needs. You will also get other detailed data on top questions, viewer engagement time, and drop-off points all showing what interests each buyer.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_2_1.vtt"
     },
     {
       "id": "video_1_2_2",
       "title": "Can I integrate this with my CRM?",
       "heygenVideoId": "7916e048c34541ecab84d216f2948c4c",
-      "src": "https://resource.heygen.ai/video/7916e048c34541ecab84d216f2948c4c.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_2_2.mp4",
       "question": "Can I integrate this with my CRM?",
       "answer": "Not right now, we don't have CRM integrations yet, but we'll be adding them soon.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_2_2.vtt"
     },
     {
       "id": "video_1_2_3",
       "title": "How does this improve conversions?",
       "heygenVideoId": "97d72d8084aa414595c4b0c28f44fe94",
-      "src": "https://resource.heygen.ai/video/97d72d8084aa414595c4b0c28f44fe94.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_2_3.mp4",
       "question": "How does this improve conversions?",
       "answer": "Buyers get clarity faster, meaning fewer drop-offs. Sales reps jump into calls already knowing what matters most, leading to higher-quality conversations and conversions.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_2_3.vtt"
     },
     {
       "id": "video_2_1",
       "title": "Can I see an example?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_2_1.mp4",
       "question": "Can I see an example?",
       "answer": "Yes! You're in one now, This demo itself is powered by Qudemo, try asking me anything to see how it feels.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_2_1.vtt"
     },
     {
       "id": "video_2_2",
       "title": "Does Qudemo support Loom or YouTube videos?",
       "heygenVideoId": "7a5367828133489ab10431026be916e8",
-      "src": "https://resource.heygen.ai/video/7a5367828133489ab10431026be916e8.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_2_2.mp4",
       "question": "Does Qudemo support Loom or YouTube videos?",
       "answer": "Yes, You can connect videos directly from Loom or YouTube, no downloads or conversions needed.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_2_2.vtt"
     },
     {
       "id": "video_2_3",
       "title": "How do I share my Qudemo?",
       "heygenVideoId": "8193116265f2409093cea1422a51955f",
-      "src": "https://resource.heygen.ai/video/8193116265f2409093cea1422a51955f.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_2_3.mp4",
       "question": "How do I share my Qudemo?",
       "answer": "You'll get a unique link for every Qudemo. You can embed it on your website, share it in emails, or send it via chat.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_2_3.vtt"
     },
     {
       "id": "video_3_2",
       "title": "How can startups benefit from it?",
       "heygenVideoId": "7544ca72202d4057926da79022945124",
-      "src": "https://resource.heygen.ai/video/7544ca72202d4057926da79022945124.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_3_2.mp4",
       "question": "How can startups benefit from it?",
       "answer": "Startups use Qudemo to stand out. Instead of long demo calls, they share interactive demos that convert curiosity into booked meetings.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_3_2.vtt"
     },
     {
       "id": "video_3_3",
       "title": "What industries use Qudemo?",
       "heygenVideoId": "06dfd8703f93470bbb1da47ffd219cd8",
-      "src": "https://resource.heygen.ai/video/06dfd8703f93470bbb1da47ffd219cd8.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_3_3.mp4",
       "question": "What industries use Qudemo?",
       "answer": "We see strong adoption in SaaS but it can be used for FinTech, HRTech, EdTech, and IT Services, basically anywhere video is used to explain products.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_3_3.vtt"
     },
     {
       "id": "video_1_3_1",
       "title": "Can I upload multiple videos?",
       "heygenVideoId": "00b1932a2cc04630ab75ac7c6c50a384",
-      "src": "https://resource.heygen.ai/video/00b1932a2cc04630ab75ac7c6c50a384.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_3_1.mp4",
       "question": "Can I upload multiple videos?",
       "answer": "Yes, You can upload multiple videos in one Qudemo, and you can also create as many Qudemos as you like.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_3_1.vtt"
     },
     {
       "id": "video_1_3_2",
       "title": "Is there a length limit for videos?",
       "heygenVideoId": "5fd4d0be68c0483cba4f51ac79cb12d6",
-      "src": "https://resource.heygen.ai/video/5fd4d0be68c0483cba4f51ac79cb12d6.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_3_2.mp4",
       "question": "Is there a length limit for videos?",
       "answer": "There's no strict limit. Qudemo actually works best with long-form videos - from what we've seen, demos over 10 minutes perform really well since Qudemo helps viewers get the key info faster without watching the whole thing.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_3_2.vtt"
     },
     {
       "id": "video_1_3_3",
       "title": "Can I update my video later?",
       "heygenVideoId": "fb58008a4a5b40b9afe2b6a91e499351",
-      "src": "https://resource.heygen.ai/video/fb58008a4a5b40b9afe2b6a91e499351.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_1_3_3.mp4",
       "question": "Can I update my video later?",
       "answer": "Of course, You can replace or update videos anytime, and the AI will automatically adjust to the new content.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_1_3_3.vtt"
     },
     {
       "id": "video_7",
@@ -299,70 +319,78 @@
           "text": "How accurate are the answers?",
           "nextVideo": "video_16"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_7.vtt"
     },
     {
       "id": "video_7_1",
       "title": "Can I track who watched my demo?",
       "heygenVideoId": "f5e219cde4b94687a2067616d5046f1b",
-      "src": "https://resource.heygen.ai/video/f5e219cde4b94687a2067616d5046f1b.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_7_1.mp4",
       "question": "Can I track who watched my demo?",
       "answer": "Yes, you'll see viewer data - including views, engagement time, and questions asked.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_7_1.vtt"
     },
     {
       "id": "video_7_2",
       "title": "Does embedding slow down my site?",
       "heygenVideoId": "fe64089a10b245669559fd15c9555bf5",
-      "src": "https://resource.heygen.ai/video/fe64089a10b245669559fd15c9555bf5.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_7_2.mp4",
       "question": "Does embedding slow down my site?",
       "answer": "Not at all. Qudemo is lightweight and optimised for performance.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_7_2.vtt"
     },
     {
       "id": "video_7_3",
       "title": "Can I personalise each demo link?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_7_3.mp4",
       "question": "Can I personalise each demo link?",
       "answer": "Yes, you can share unique link for each customer where you can track analytics from your dashboard",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_7_3.vtt"
     },
     {
       "id": "video_8",
       "title": "What if Qudemo doesn't know the answer?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_8.mp4",
       "question": "What if Qudemo doesn't know the answer?",
       "answer": "Good question, If I ever don't have the exact answer, I'll let the viewer know politely and offer to connect them with your sales team through the Book a Call button - so no opportunity is ever lost.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_8.vtt"
     },
     {
       "id": "video_8_1",
       "title": "Can I train Qudemo with more knowledge?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_8_1.mp4",
       "question": "Can I train Qudemo with more knowledge?",
       "answer": "Yes! You can add or update docs anytime, and Qudemo will refresh its learning instantly.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_8_1.vtt"
     },
     {
       "id": "video_8_2",
       "title": "Does it improve over time?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_8_2.mp4",
       "question": "Does it improve over time?",
       "answer": "Absolutely. It learns from viewer interactions and fine-tunes future responses automatically.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_8_2.vtt"
     },
     {
       "id": "video_8_3",
       "title": "How does it handle FAQs?",
       "heygenVideoId": "YOUR_HEYGEN_VIDEO_ID_HERE",
-      "src": "https://resource.heygen.ai/video/YOUR_HEYGEN_VIDEO_ID_HERE.mp4",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_8_3.mp4",
       "question": "How does it handle FAQs?",
       "answer": "Qudemo uses your FAQ content as a quick reference, giving consistent, context-aware answers.",
-      "nextQuestions": null
+      "nextQuestions": null,
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_8_3.vtt"
     },
     {
       "id": "video_9",
@@ -387,7 +415,8 @@
           "text": "What if my team has multiple products?",
           "nextVideo": "video_15"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_9.vtt"
     },
     {
       "id": "video_10",
@@ -412,7 +441,8 @@
           "text": "What's the pricing?",
           "nextVideo": "video_12"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_10.vtt"
     },
     {
       "id": "video_11",
@@ -437,7 +467,8 @@
           "text": "What's the pricing?",
           "nextVideo": "video_12"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_11.vtt"
     },
     {
       "id": "video_12",
@@ -462,7 +493,8 @@
           "text": "What if my team has multiple products?",
           "nextVideo": "video_15"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_12.vtt"
     },
     {
       "id": "video_14",
@@ -487,7 +519,8 @@
           "text": "How does it learn over time?",
           "nextVideo": "video_18"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_14.vtt"
     },
     {
       "id": "video_15",
@@ -512,7 +545,8 @@
           "text": "What insights can I see?",
           "nextVideo": "video_9"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_15.vtt"
     },
     {
       "id": "video_16",
@@ -537,7 +571,8 @@
           "text": "Can I integrate Qudemo with other tools?",
           "nextVideo": "video_14"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_16.vtt"
     },
     {
       "id": "video_17",
@@ -562,7 +597,8 @@
           "text": "What if my team has multiple products?",
           "nextVideo": "video_15"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_17.vtt"
     },
     {
       "id": "video_18",
@@ -587,7 +623,8 @@
           "text": "What's the pricing?",
           "nextVideo": "video_12"
         }
-      ]
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_18.vtt"
     },
     {
       "id": "video_9_2",
