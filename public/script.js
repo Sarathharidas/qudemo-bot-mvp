@@ -1008,62 +1008,53 @@ class VideoChatApp {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
 
         try {
-            // Call backend API to match question using OpenAI
-            console.log('Calling API with question:', userQuestion);
-            const response = await fetch('/api/match-question', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userQuestion })
-            });
+            // Use frontend-only question matching (works in production on Netlify)
+            console.log('Matching question:', userQuestion);
+            const result = this.matchQuestion(userQuestion);
+            console.log('Match result:', result);
             
-            console.log('API response status:', response.status);
-            const result = await response.json();
-            console.log('API result:', result);
+            // Hide typing indicator
+            this.isTyping = false;
+            this.typingIndicator.style.display = 'none';
             
-                // Hide typing indicator
-                this.isTyping = false;
-                this.typingIndicator.style.display = 'none';
-                
-                if (result.matched) {
-                    // Found a match!
-                    if (this.videoFlow && this.videoFlow.videos) {
-                        const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
+            if (result.matched) {
+                // Found a match!
+                if (this.videoFlow && this.videoFlow.videos) {
+                    const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
 
-                        if (matchedVideo) {
-                            // Check if it's a fallback video
-                            if (result.isFallback || result.confidence === 'fallback') {
-                                const aiResponse = "I'm not sure about that specific question, but I can connect you with our sales team or help you with other questions about Qudemo, pricing, security, and features!";
-                                this.addChatMessage(aiResponse, 'AI');
-                            } else {
-                                const aiResponse = matchedVideo.answer || `Playing video: ${matchedVideo.title || matchedVideo.question}`;
-                                this.addChatMessage(aiResponse, 'AI');
-                            }
-
-                            // Play the matched video
-                            const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
-                            if (videoIndex !== -1) {
-                                this.playVideo(videoIndex);
-                                // Force play after user interaction
-                                setTimeout(() => {
-                                    this.videoPlayer.play().catch(error => {
-                                        if (error.name === 'NotAllowedError') {
-                                            this.showPlayButton();
-                                        }
-                                    });
-                                }, 100);
-                            }
+                    if (matchedVideo) {
+                        // Check if it's a fallback video
+                        if (result.isFallback || result.confidence === 'fallback') {
+                            const aiResponse = "I'm not sure about that specific question, but I can connect you with our sales team or help you with other questions about Qudemo, pricing, security, and features!";
+                            this.addChatMessage(aiResponse, 'AI');
                         } else {
-                            this.addChatMessage("I couldn't find a matching video. Try asking another question!", 'AI');
+                            const aiResponse = matchedVideo.answer || `Playing video: ${matchedVideo.title || matchedVideo.question}`;
+                            this.addChatMessage(aiResponse, 'AI');
+                        }
+
+                        // Play the matched video
+                        const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
+                        if (videoIndex !== -1) {
+                            this.playVideo(videoIndex);
+                            // Force play after user interaction
+                            setTimeout(() => {
+                                this.videoPlayer.play().catch(error => {
+                                    if (error.name === 'NotAllowedError') {
+                                        this.showPlayButton();
+                                    }
+                                });
+                            }, 100);
                         }
                     } else {
-                        // Video flow not available, show fallback response
-                        this.addChatMessage("I understand your question, but I'm having trouble loading the video content. Please try refreshing the page.", 'AI');
+                        this.addChatMessage("I couldn't find a matching video. Try asking another question!", 'AI');
                     }
                 } else {
-                    this.addChatMessage("I'm not sure about that. You can ask me about Qudemo, pricing, security, or other features!", 'AI');
+                    // Video flow not available, show fallback response
+                    this.addChatMessage("I understand your question, but I'm having trouble loading the video content. Please try refreshing the page.", 'AI');
                 }
+            } else {
+                this.addChatMessage("I'm not sure about that. You can ask me about Qudemo, pricing, security, or other features!", 'AI');
+            }
         } catch (error) {
             console.error('Error matching question:', error);
             
@@ -1097,51 +1088,78 @@ class VideoChatApp {
         this.addChatMessage("I'm not sure about that specific question. Try asking in a different way!", 'AI');
     }
     
-    findMatchingVideo(userQuestion) {
+    matchQuestion(userQuestion) {
         if (!this.videoFlow || !this.videoFlow.videos) {
-            return null;
+            return { matched: false };
         }
         
-        const lowerQuestion = userQuestion.toLowerCase();
+        const lowerQuestion = userQuestion.toLowerCase().trim();
         
-        // Try exact match first
-        for (const video of this.videoFlow.videos) {
-            if (video.question && video.question.toLowerCase() === lowerQuestion) {
-                return video;
-            }
-        }
+        // Handle generic/contextual questions first (same logic as backend)
+        const genericPatterns = {
+            'what is qudemo': ['what is qudemo', 'what is this', 'what is it', 'tell me about', 'what does this do', 'what is this about', 'explain this', 'what are you', 'what do you do'],
+            'how does qudemo work': ['how does', 'how do i', 'how to use', 'how it works', 'how do you'],
+            'who is qudemo for': ['who is this for', 'who can use', 'who should use', 'target audience', 'who needs'],
+            'what is the pricing': ['how much', 'cost', 'price', 'pricing', 'payment', 'expensive'],
+            'how secure is my data': ['secure', 'security', 'safe', 'privacy', 'data protection']
+        };
         
-        // Try partial match with keywords
-        const keywords = lowerQuestion.split(' ').filter(word => word.length > 3);
-        
-        let bestMatch = null;
-        let bestScore = 0;
-        
-        for (const video of this.videoFlow.videos) {
-            if (!video.question) continue;
-            
-            const videoQuestion = video.question.toLowerCase();
-            let score = 0;
-            
-            // Check how many keywords match
-            for (const keyword of keywords) {
-                if (videoQuestion.includes(keyword)) {
-                    score++;
+        // Check for generic patterns
+        for (const [targetQuestion, patterns] of Object.entries(genericPatterns)) {
+            for (const pattern of patterns) {
+                if (lowerQuestion.includes(pattern)) {
+                    // Find the matching question in availableQuestions
+                    const match = this.videoFlow.videos.find(v => 
+                        v.question && v.question.toLowerCase().includes(targetQuestion)
+                    );
+                    if (match) {
+                        return {
+                            matched: true,
+                            videoId: match.id,
+                            question: match.question,
+                            confidence: 'high'
+                        };
+                    }
                 }
             }
-            
-            // Bonus for title match
-            if (video.title && video.title.toLowerCase().includes(lowerQuestion)) {
-                score += 2;
-            }
-            
-            if (score > bestScore && score >= 2) { // At least 2 keyword matches
-                bestScore = score;
-                bestMatch = video;
+        }
+        
+        // Direct question matching
+        for (const video of this.videoFlow.videos) {
+            if (video.question) {
+                const lowerVideoQuestion = video.question.toLowerCase();
+                if (lowerQuestion.includes(lowerVideoQuestion) || lowerVideoQuestion.includes(lowerQuestion)) {
+                    return {
+                        matched: true,
+                        videoId: video.id,
+                        question: video.question,
+                        confidence: 'high'
+                    };
+                }
             }
         }
         
-        return bestMatch;
+        // Check for fallback video
+        const fallbackVideo = this.videoFlow.videos.find(v => v.isFallback);
+        if (fallbackVideo) {
+            return {
+                matched: true,
+                videoId: fallbackVideo.id,
+                question: fallbackVideo.question,
+                confidence: 'fallback',
+                isFallback: true
+            };
+        }
+        
+        return { matched: false };
+    }
+    
+    findMatchingVideo(userQuestion) {
+        const result = this.matchQuestion(userQuestion);
+        if (result.matched && this.videoFlow) {
+            return this.videoFlow.videos.find(v => v.id === result.videoId);
+        }
+        return null;
     }
 }
 
