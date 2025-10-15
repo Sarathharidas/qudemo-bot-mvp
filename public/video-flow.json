@@ -1,6 +1,33 @@
 {
   "videos": [
     {
+      "id": "video_intro",
+      "title": "Welcome to Qudemo",
+      "heygenVideoId": "INTRO_VIDEO",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_intro.mp4",
+      "question": "Intro",
+      "answer": "Hey, I'm Jazeem, founder of Qudemo. We really value every customer, so I wanted to personally welcome you here. Feel free to ask me anything about Qudemo - I'll walk you through how it works.",
+      "nextQuestions": [
+        {
+          "id": "qintro_1",
+          "text": "What is Qudemo?",
+          "nextVideo": "video_1"
+        },
+        {
+          "id": "qintro_2",
+          "text": "How does Qudemo work?",
+          "nextVideo": "video_2"
+        },
+        {
+          "id": "qintro_3",
+          "text": "Who is Qudemo for?",
+          "nextVideo": "video_3"
+        }
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_intro.vtt",
+      "isIntro": true
+    },
+    {
       "id": "video_1",
       "title": "What is Qudemo?",
       "heygenVideoId": "0cde44309af042d78c380cc6caf6c4eb",
@@ -742,6 +769,33 @@
       "question": "Can I use Qudemo for customer onboarding?",
       "answer": "Many teams use Kudemo for onboarding, product training, or customer support videos. It helps learners get answers instantly without waiting for a human trainer.",
       "nextQuestions": null
+    },
+    {
+      "id": "video_fallback",
+      "title": "I'm not sure about that",
+      "heygenVideoId": "FALLBACK_VIDEO",
+      "src": "https://storage.googleapis.com/qudemo-videos/videos/video_fallback.mp4",
+      "question": "Fallback Response",
+      "answer": "I'm sorry - as an AI, I may not have that answer right now. But I can connect you with our sales team for a quick in-person walkthrough to explore it deeper. Would you like me to arrange that?",
+      "nextQuestions": [
+        {
+          "id": "qfallback_1",
+          "text": "Yes, connect me to sales",
+          "nextVideo": "video_1"
+        },
+        {
+          "id": "qfallback_2",
+          "text": "What is Qudemo?",
+          "nextVideo": "video_2"
+        },
+        {
+          "id": "qfallback_3",
+          "text": "No, thank you",
+          "nextVideo": "video_1"
+        }
+      ],
+      "subtitle": "https://storage.googleapis.com/qudemo-videos/subtitles/video_fallback.vtt",
+      "isFallback": true
     }
   ]
 }

@@ -1,0 +1,262 @@
+Qudemo – Full Conversation Flow 
+Qudemo AI (Welcome Note)
+Hey, I’m Jazeem, founder of Qudemo. We really value every customer, so I wanted to personally welcome you here. Feel free to ask me anything about Qudemo - I’ll walk you through how it works. 
+Suggested Questions:
+What is Qudemo?
+How does Qudemo work?
+Who is Qudemo for?
+1. What is Qudemo?
+Qudemo Assistant:
+Qudemo is an AI-agent that makes demo videos interactive. Customers can ask questions while watching, get instant answers, and even jump to the exact video moment that explains it - like chatting with your demo instead of just watching it.
+Suggested Next:
+How is it different from normal demo videos?
+Does it help sales teams too?
+What kind of videos can I use with Qudemo?
+2. How does Qudemo work?
+Qudemo Assistant:
+It’s really simple! You upload a demo or product video, upload your product knowledge or FAQs, and Qudemo instantly creates an interactive version. Customers can chat with the video and get real-time answers from your content. 
+Suggested Next:
+Can I see an example?
+Does Qudemo support Loom or YouTube videos?
+How do I share my Qudemo?
+Answers:
+Can I see an example?
+ Yes! You’re in one now, This demo itself is powered by Qudemo, try asking me anything to see how it feels.
+
+
+Does Qudemo support Loom or YouTube videos?
+ Yes, You can connect videos directly from Loom or YouTube, no downloads or conversions needed.
+
+
+How do I share my Qudemo?
+ You’ll get a unique link for every Qudemo. You can embed it on your website, share it in emails, or send it via chat.
+
+3. Who is Qudemo for?
+Qudemo Assistant:
+Qudemo is perfect for B2B SaaS teams, startups, and educators who share pre-recorded videos for demos, onboarding, training, or support. Basically, anyone using videos to engage customers or learners will find Qudemo useful.
+Suggested Next:
+Can I use Qudemo for customer onboarding? - have answer
+How can startups benefit from it?
+What industries use Qudemo?
+Answers:
+
+
+How can startups benefit from it?
+ Startups use Qudemo to stand out. Instead of long demo calls, they share interactive demos that convert curiosity into booked meetings.
+
+
+What industries use Qudemo?
+ We see strong adoption in SaaS but it can be used for FinTech, HRTech, EdTech, and IT Services, basically anywhere video is used to explain products.
+
+
+
+1.1 How is it different from a regular demo video?
+Qudemo Assistant:
+Traditional demo videos are one-way, you watch and wait. Qudemo makes them two-way.  It answers questions, highlights relevant sections, and gives viewers a reason to stay engaged till the end.
+Suggested Next:
+Does it respond in real time?
+Can it handle complex questions?
+How does Qudemo find answers in videos?
+Answers:
+Does it respond in real time?
+ Yes, Qudemo replies instantly, just like live chat - powered by your product knowledge and video context.
+
+
+Can it handle complex questions?
+ Absolutely. The AI combines your docs and video transcript to form context-aware answers - even for multi-step or feature-based queries.
+
+
+How does Qudemo find answers in videos?
+ It analyses your video’s transcript and maps it with your content. When a viewer asks something, it locates the right section and jumps there automatically.
+
+
+1.2 Does it help sales teams too?
+Qudemo Assistant:
+Absolutely! 
+Buyers get answers instantly, and sales teams see what questions prospects ask, what parts they rewatch, and what they care most about. This helps sales reps prepare smarter follow-ups and book more qualified calls.
+Suggested Next:
+What kind of insights can sales teams see?
+Can I integrate this with my CRM?
+How does this improve conversions?
+Answers:
+What kind of insights can sales teams see?
+ We help you to get a summary of buyer’s needs. You will also get other detailed data on top questions, viewer engagement time, and drop-off points all showing what interests each buyer.
+
+
+Can I integrate this with my CRM?
+Not right now, we don’t have CRM integrations yet, but we’ll be adding them soon.
+
+
+How does this improve conversions?
+Buyers get clarity faster, meaning fewer drop-offs. Sales reps jump into calls already knowing what matters most, leading to higher-quality conversations and conversions.
+
+
+1.3 What kind of videos can I use?
+Qudemo Assistant:
+ You can upload your own demos or connect existing Loom or YouTube videos. Qudemo works with all common formats - you don’t need to record anything new.
+Suggested Next:
+Can I upload multiple videos?
+Is there a length limit for videos?
+Can I update my video later?
+Answers:
+Can I upload multiple videos?
+Yes, You can upload multiple videos in one Qudemo, and you can also create as many Qudemos as you like.
+
+
+Is there a length limit for videos?
+There’s no strict limit. Qudemo actually works best with long-form videos - from what we’ve seen, demos over 10 minutes perform really well since Qudemo helps viewers get the key info faster without watching the whole thing.
+
+
+Can I update my video later?
+ Of course, You can replace or update videos anytime, and the AI will automatically adjust to the new content.
+
+
+
+7. Can I embed Qudemo or share it?
+Qudemo Assistant:
+Yes, You can share your Qudemo anywhere with a simple link, through email, chat, or social media. You can also embed it on your website or help centre. Each shared demo gives you unique viewer insights so you can see how people interact with it.
+Suggested Next:
+Can I track who watched my demo?
+Does embedding slow down my site?
+Can I personalise each demo link?
+Answers:
+Can I track who watched my demo?
+ Yes, you’ll see viewer data - including views, engagement time, and questions asked.
+
+
+Does embedding slow down my site?
+ Not at all. Qudemo is lightweight and optimised for performance.
+
+
+Can I personalise each demo link?
+ Yes, you can share unique link for each customer where you can track analytics from your dashboard
+
+
+
+8. What if Qudemo doesn’t know the answer?
+Qudemo Assistant:
+ Good question, If I ever don’t have the exact answer, I’ll let the viewer know politely and offer to connect them with your sales team through the Book a Call button - so no opportunity is ever lost.
+Suggested Next:
+Can I train Qudemo with more knowledge?
+Does it improve over time?
+How does it handle FAQs?
+Answers:
+Can I train Qudemo with more knowledge?
+ Yes! You can add or update docs anytime, and Qudemo will refresh its learning instantly.
+
+
+Does it improve over time?
+ Absolutely. It learns from viewer interactions and fine-tunes future responses automatically.
+
+
+How does it handle FAQs?
+ Qudemo uses your FAQ content as a quick reference, giving consistent, context-aware answers.
+
+
+
+9. What insights can I see?
+Qudemo Assistant:
+You’ll get insights on the top questions asked, viewer engagement time, and drop-off points. It helps your team understand what buyers care about before hopping on a call.
+Suggested Next:
+Can I export these insights?
+Can marketing use these reports?
+Are insights real time?
+
+
+10. Can I use Qudemo for onboarding or training?
+Qudemo Assistant:
+Definitely! 
+Many teams use Qudemo for onboarding, product training, or customer support videos. It helps learners get answers instantly without waiting for a human trainer.
+Suggested Next:
+Can I upload tutorial videos too?
+Can it handle multilingual training?
+Does it track training progress?
+
+
+
+11. How secure is my data?
+Qudemo Assistant:
+We take security seriously.
+Your videos and data are stored safely using encrypted cloud storage. We don’t sell or share your data, and you can delete it anytime.
+Suggested Next:
+Where is my data stored?
+Do you log viewer activity?
+Can I remove videos permanently?
+
+
+12. What’s the pricing?
+Qudemo Assistant:
+Good question - we’ve kept it simple. You can start with our basic plan for free. But for full sharing and analytics, we have a Pro plan at $29/month simple and flexible.
+Suggested Next:
+How long is the free version available?
+What will paid plans include?
+Do you offer team pricing?
+
+
+
+
+
+
+
+14. Can I integrate Qudemo with other tools?
+Qudemo Assistant:
+We’re working on integrations with HubSpot, Notion, and Google Drive to make product knowledge syncing effortless. For now, you can upload docs directly or use URLs.
+Suggested Next:
+Can I connect CRM data?
+When will integrations go live?
+Can I use Zapier?
+
+
+15. What if my team has multiple products?
+Qudemo Assistant:
+No problem 
+You can create separate Qudemos for each product. Each one tracks insights independently - perfect for teams with multiple offerings.
+Suggested Next:
+Can I manage them from one dashboard?
+Can I share access with teammates?
+How many Qudemos can I create?
+
+
+
+16. How accurate are the answers?
+Qudemo Assistant:
+Qudemo uses your own product data and video context, so answers stay highly relevant. We always recommend connecting your latest docs for best accuracy.
+Suggested Next:
+Can I review Qudemo’s answers?
+Can I edit or delete wrong answers?
+Does Qudemo learn over time?
+
+
+17. Can I collect leads from Qudemo?
+Qudemo Assistant:
+Yes, Qudemo helps capture intent-rich leads.
+You’ll know who watched, what they asked, and can follow up with the most interested prospects.
+Suggested Next:
+Can I export lead data?
+Does it integrate with HubSpot or Salesforce?
+Can I automate follow-ups?
+
+
+18. How does it learn over time?
+Qudemo Assistant:
+Qudemo improves based on your video interactions and questions viewers ask most. You can update product knowledge anytime, and the AI will adjust automatically. 
+
+Fallback (For Unknown Questions)
+Qudemo Assistant:
+I’m sorry - as an AI, I may not have that answer right now.
+But I can connect you with our sales team for a quick in-person walkthrough to explore it deeper.  Would you like me to arrange that?
+Suggested:
+Yes, connect me to sales
+Ask another question
+No, thank you
+
+Closing / Final CTA
+Qudemo Assistant:
+Looks like you’ve got a good sense of how Qudemo works 
+If you’re happy with what you’ve seen or want to explore it more in depth. I can share available slots for a quick in-person call.
+CTA Options:
+Yes, show available slots
+I have a few more questions
+Not now, maybe later
+
+

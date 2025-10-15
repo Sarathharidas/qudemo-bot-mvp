@@ -53,6 +53,18 @@ app.post('/api/match-question', async (req, res) => {
         // Use OpenAI to find the best match
         const matchedQuestion = await findBestMatchWithOpenAI(userQuestion, availableQuestions);
         
+        // If no match found, return fallback video
+        if (!matchedQuestion.matched) {
+            console.log('No match found, returning fallback video');
+            return res.json({
+                matched: true,
+                videoId: 'video_fallback',
+                question: 'Fallback Response',
+                confidence: 'fallback',
+                isFallback: true
+            });
+        }
+        
         res.json(matchedQuestion);
     } catch (error) {
         console.error('Error matching question:', error);
@@ -79,14 +91,21 @@ async function findBestMatchWithOpenAI(userQuestion, availableQuestions) {
             `${i + 1}. ${q.question}`
         ).join('\n');
         
-        const prompt = `You are a helpful assistant that matches user questions to a list of available questions.
+        const prompt = `You are a helpful assistant that matches user questions to a list of available questions about Qudemo (an interactive video demo platform).
 
 User asked: "${userQuestion}"
 
-Available questions:
+Available questions about Qudemo:
 ${questionsText}
 
-Which question number (1-${availableQuestions.length}) best matches the user's question? If none match well, respond with "0".
+Instructions:
+- If the user asks a generic question like "what is this about", "tell me about this", "what does this do", match it to "What is Qudemo?" (usually question 1)
+- If the user asks "how does it work", "how do I use this", match it to "How does Qudemo work?" (usually question 2)
+- If the user asks "who is this for", "who can use this", match it to "Who is Qudemo for?" (usually question 3)
+- Match based on meaning and intent, not just keywords
+- If truly no match, respond with "0"
+
+Which question number (1-${availableQuestions.length}) best matches the user's question?
 
 Respond with ONLY the number, nothing else.`;
 
@@ -134,8 +153,38 @@ Respond with ONLY the number, nothing else.`;
 }
 
 function fallbackQuestionMatching(userQuestion, availableQuestions) {
-    // Simple keyword-based fallback
-    const lowerQuestion = userQuestion.toLowerCase();
+    const lowerQuestion = userQuestion.toLowerCase().trim();
+    
+    // Handle generic/contextual questions first
+    const genericPatterns = {
+        'what is qudemo': ['what is qudemo', 'what is this', 'what is it', 'tell me about', 'what does this do', 'what is this about', 'explain this', 'what are you', 'what do you do'],
+        'how does qudemo work': ['how does', 'how do i', 'how to use', 'how it works', 'how do you'],
+        'who is qudemo for': ['who is this for', 'who can use', 'who should use', 'target audience', 'who needs'],
+        'what is the pricing': ['how much', 'cost', 'price', 'pricing', 'payment', 'expensive'],
+        'how secure is my data': ['secure', 'security', 'safe', 'privacy', 'data protection']
+    };
+    
+    // Check for generic patterns
+    for (const [targetQuestion, patterns] of Object.entries(genericPatterns)) {
+        for (const pattern of patterns) {
+            if (lowerQuestion.includes(pattern)) {
+                // Find the matching question in availableQuestions
+                const match = availableQuestions.find(q => 
+                    q.question.toLowerCase().includes(targetQuestion)
+                );
+                if (match) {
+                    return {
+                        matched: true,
+                        videoId: match.id,
+                        question: match.question,
+                        confidence: 'high'
+                    };
+                }
+            }
+        }
+    }
+    
+    // If no generic pattern matched, try keyword-based matching
     const keywords = lowerQuestion.split(' ').filter(word => word.length > 3);
     
     let bestMatch = null;
@@ -151,7 +200,8 @@ function fallbackQuestionMatching(userQuestion, availableQuestions) {
             }
         }
         
-        if (score > bestScore && score >= 2) {
+        // Lower threshold to 1 keyword for better matching
+        if (score > bestScore && score >= 1) {
             bestScore = score;
             bestMatch = q;
         }

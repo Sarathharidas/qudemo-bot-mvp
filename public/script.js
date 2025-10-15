@@ -749,7 +749,7 @@ class VideoChatApp {
         }
         
         // Voice button click handler
-        this.voiceButton.addEventListener('click', () => {
+        this.voiceButton.addEventListener('click', async () => {
             console.log('🎤 Microphone button clicked');
             
             if (!this.recognition) {
@@ -786,10 +786,39 @@ class VideoChatApp {
                     this.answerBox.innerHTML = `
                         <div style="text-align: center; color: #2196F3;">
                             <strong>⏳ Preparing microphone...</strong><br/>
-                            <small>Get ready to speak!</small>
+                            <small>Initializing audio...</small>
                         </div>
                     `;
                     this.answerBox.style.display = 'block';
+                    
+                    // 🔧 FIX: Pre-initialize audio stream with getUserMedia
+                    console.log('🔧 Pre-initializing audio with getUserMedia...');
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        console.log('✅ Audio stream pre-initialized!');
+                        
+                        // Release the stream immediately (we just needed it to initialize)
+                        stream.getTracks().forEach(track => track.stop());
+                        console.log('✅ Pre-init stream released');
+                        
+                        // Update UI
+                        this.answerBox.innerHTML = `
+                            <div style="text-align: center; color: #4CAF50;">
+                                <strong>✅ Microphone ready!</strong><br/>
+                                <small>Starting recognition...</small>
+                            </div>
+                        `;
+                    } catch (preInitError) {
+                        console.error('❌ Pre-init failed:', preInitError);
+                        this.answerBox.innerHTML = `
+                            <div class="not-found">
+                                <strong>❌ Microphone access failed</strong><br/>
+                                <small>${preInitError.message}</small>
+                            </div>
+                        `;
+                        this.answerBox.className = 'answer-box not-found';
+                        return;
+                    }
                     
                     // Small delay to let microphone initialize properly
                     setTimeout(() => {
@@ -859,40 +888,56 @@ class VideoChatApp {
             
             const result = await response.json();
             
-            if (result.matched) {
-                // Found a match!
-                const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
-                
-                if (matchedVideo) {
-                    this.answerBox.innerHTML = `
-                        <div class="success">
-                            <strong>✅ Found answer!</strong><br/>
-                            Playing video: "${matchedVideo.title || matchedVideo.question}"
-                            ${result.confidence ? `<br/><small style="opacity: 0.7;">Confidence: ${result.confidence}</small>` : ''}
-                        </div>
-                    `;
-                    this.answerBox.className = 'answer-box success';
-                    this.answerBox.style.display = 'block';
-                    
-                    // Play the matched video
-                    const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
-                    if (videoIndex !== -1) {
-                        this.playVideo(videoIndex);
+                if (result.matched) {
+                    // Found a match!
+                    const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
+
+                    if (matchedVideo) {
+                        // Check if it's a fallback video
+                        if (result.isFallback || result.confidence === 'fallback') {
+                            this.answerBox.innerHTML = `
+                                <div class="not-found">
+                                    <strong>🤔 I'm not sure about that</strong><br/>
+                                    I don't have a specific answer to "${this.questionInput.value}", but let me show you what I can help with!
+                                    <br/><small style="opacity: 0.7; margin-top: 8px; display: block;">
+                                        You can ask me about Qudemo, pricing, security, features, and more!
+                                    </small>
+                                </div>
+                            `;
+                            this.answerBox.className = 'answer-box not-found';
+                        } else {
+                            this.answerBox.innerHTML = `
+                                <div class="success">
+                                    <strong>✅ Found answer!</strong><br/>
+                                    Playing video: "${matchedVideo.title || matchedVideo.question}"
+                                    ${result.confidence ? `<br/><small style="opacity: 0.7;">Confidence: ${result.confidence}</small>` : ''}
+                                </div>
+                            `;
+                            this.answerBox.className = 'answer-box success';
+                        }
+                        
+                        this.answerBox.style.display = 'block';
+
+                        // Play the matched video
+                        const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
+                        if (videoIndex !== -1) {
+                            this.playVideo(videoIndex);
+                        }
+
+                        // Clear input
+                        this.questionInput.value = '';
+
+                        // Hide answer after a few seconds (longer for fallback)
+                        const hideDelay = result.isFallback ? 5000 : 3000;
+                        setTimeout(() => {
+                            this.answerBox.style.display = 'none';
+                        }, hideDelay);
+                    } else {
+                        this.showNoMatchMessage();
                     }
-                    
-                    // Clear input
-                    this.questionInput.value = '';
-                    
-                    // Hide answer after a few seconds
-                    setTimeout(() => {
-                        this.answerBox.style.display = 'none';
-                    }, 3000);
                 } else {
                     this.showNoMatchMessage();
                 }
-            } else {
-                this.showNoMatchMessage();
-            }
         } catch (error) {
             console.error('Error matching question:', error);
             // Fallback to local matching

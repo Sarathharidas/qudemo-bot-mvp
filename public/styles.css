@@ -279,11 +279,11 @@ body {
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.85);
     color: white;
-    padding: 12px 24px;
+    padding: 8px 32px;
     border-radius: 8px;
-    font-size: 18px;
-    line-height: 1.6;
-    max-width: 85%;
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 92%;
     text-align: center;
     pointer-events: none;
     z-index: 10;
