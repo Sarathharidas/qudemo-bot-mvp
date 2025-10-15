@@ -1,31 +1,31 @@
 class VideoChatApp {
     constructor() {
         this.videoPlayer = document.getElementById('videoPlayer');
-        this.questionOverlay = document.getElementById('questionOverlay');
-        this.questionBox = document.getElementById('questionBox');
+        this.chatMessages = document.getElementById('chatMessages');
+        this.typingIndicator = document.getElementById('typingIndicator');
+        this.currentProgressSpan = document.getElementById('currentProgress');
+        this.totalProgressSpan = document.getElementById('totalProgress');
         this.playButtonOverlay = document.getElementById('playButtonOverlay');
         this.playButton = document.getElementById('playButton');
-        this.progressFill = document.getElementById('progressFill');
-        this.currentVideoSpan = document.getElementById('currentVideo');
-        this.totalVideosSpan = document.getElementById('totalVideos');
-        this.suggestedQuestionsContainer = document.getElementById('suggestedQuestions');
         
         // Question input elements
         this.questionInput = document.getElementById('questionInput');
         this.voiceButton = document.getElementById('voiceButton');
         this.askButton = document.getElementById('askButton');
         this.answerBox = document.getElementById('answerBox');
+        // Book meeting button removed
         
         this.videoFlow = null;
         this.suggestedQuestions = null;
         this.currentVideoIndex = 0;
-        this.isQuestionVisible = false;
+        this.messages = [];
         
         // Voice recognition setup
         this.recognition = null;
         this.isListening = false;
+        this.isTyping = false;
         
-        // Remove crossorigin attribute since CORS isn't working
+        // Remove crossorigin attribute
         this.videoPlayer.removeAttribute('crossorigin');
         
         this.init();
@@ -39,15 +39,120 @@ class VideoChatApp {
             ]);
             this.setupEventListeners();
             this.setupQuestionInput();
-            this.renderSuggestedQuestions();
+            this.addWelcomeMessage();
             // Add a small delay to ensure DOM is fully ready
             setTimeout(() => {
                 this.startVideoFlow();
             }, 100);
         } catch (error) {
             console.error('Error initializing app:', error);
-            this.showError('Failed to load video flow. Please refresh the page.');
+            // Show welcome message and suggested questions even if video flow fails
+            this.setupEventListeners();
+            this.setupQuestionInput();
+            this.addWelcomeMessage();
+            this.addChatMessage("Note: Some features may be limited due to loading issues.", 'AI');
         }
+    }
+    
+    addWelcomeMessage() {
+        const welcomeText = "Welcome to Qudemo! I'm your AI assistant. I can help you understand our interactive video demos. What would you like to know?";
+        this.addChatMessage(welcomeText, 'AI');
+        // Show suggested questions after welcome message
+        setTimeout(() => {
+            this.showSuggestedQuestions();
+        }, 500);
+    }
+    
+    addChatMessage(text, sender = 'AI') {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const messageGroup = document.createElement('div');
+        messageGroup.className = `message-group ${sender === 'AI' ? 'message-align-left' : 'message-align-right'}`;
+        
+        const bubble = document.createElement('div');
+        bubble.className = `message-bubble ${sender === 'AI' ? 'ai-bubble' : 'user-bubble'}`;
+        bubble.innerHTML = text;
+        
+        messageGroup.appendChild(bubble);
+        this.chatMessages.appendChild(messageGroup);
+        
+        // Scroll to bottom
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+        
+        this.messages.push({ sender, text, time });
+    }
+    
+    showSuggestedQuestions() {
+        if (!this.suggestedQuestions || !this.suggestedQuestions.questions || this.suggestedQuestions.questions.length === 0) {
+            return;
+        }
+        
+        const container = document.createElement('div');
+        container.className = 'suggested-questions-container';
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'suggested-questions-wrapper';
+        
+        const label = document.createElement('div');
+        label.className = 'suggested-label';
+        label.textContent = 'Suggested questions:';
+        wrapper.appendChild(label);
+        
+        const list = document.createElement('div');
+        list.className = 'suggested-questions-list';
+        
+        // Show first 3 questions
+        const questionsToShow = this.suggestedQuestions.questions.slice(0, 3);
+        questionsToShow.forEach(question => {
+            const btn = document.createElement('button');
+            btn.className = 'suggested-question-btn';
+            btn.textContent = question.text;
+            btn.onclick = () => this.handleSuggestedQuestionClick(question.text);
+            list.appendChild(btn);
+        });
+        
+        // Add "View More" button if there are more than 3 questions
+        if (this.suggestedQuestions.questions.length > 3) {
+            const viewMoreBtn = document.createElement('button');
+            viewMoreBtn.className = 'suggested-question-btn view-more-btn';
+            viewMoreBtn.textContent = 'View More';
+            viewMoreBtn.onclick = () => this.showAllSuggestedQuestions(container, list);
+            list.appendChild(viewMoreBtn);
+        }
+        
+        wrapper.appendChild(list);
+        container.appendChild(wrapper);
+        this.chatMessages.appendChild(container);
+        
+        // Scroll to bottom
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+    
+    showAllSuggestedQuestions(container, list) {
+        // Remove the "View More" button
+        const viewMoreBtn = list.querySelector('.view-more-btn');
+        if (viewMoreBtn) {
+            viewMoreBtn.remove();
+        }
+        
+        // Add remaining questions
+        const remainingQuestions = this.suggestedQuestions.questions.slice(3);
+        remainingQuestions.forEach(question => {
+            const btn = document.createElement('button');
+            btn.className = 'suggested-question-btn';
+            btn.textContent = question.text;
+            btn.onclick = () => this.handleSuggestedQuestionClick(question.text);
+            list.appendChild(btn);
+        });
+        
+        // Scroll to bottom
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+    
+    handleSuggestedQuestionClick(questionText) {
+        // Add user message
+        this.addChatMessage(questionText, 'User');
+        // Send the question
+        this.handleUserQuestion(questionText);
     }
     
     async loadVideoFlow() {
@@ -56,7 +161,7 @@ class VideoChatApp {
             throw new Error('Failed to fetch video flow');
         }
         this.videoFlow = await response.json();
-        this.totalVideosSpan.textContent = this.videoFlow.videos.length;
+        this.totalProgressSpan.textContent = this.videoFlow.videos.length;
     }
     
     async loadSuggestedQuestions() {
@@ -67,25 +172,9 @@ class VideoChatApp {
         this.suggestedQuestions = await response.json();
     }
     
+    // Old method - now handled in showSuggestedQuestions() after welcome message
     renderSuggestedQuestions() {
-        if (!this.suggestedQuestions || !this.suggestedQuestions.questions) {
-            return;
-        }
-        
-        // Clear any existing questions
-        this.suggestedQuestionsContainer.innerHTML = '';
-        
-        // Show all questions with scrolling instead of "Show More" button
-        this.suggestedQuestions.questions.forEach(question => {
-            const button = document.createElement('button');
-            button.className = 'suggested-question-btn';
-            button.textContent = question.text;
-            button.setAttribute('data-video-id', question.videoId);
-            button.addEventListener('click', () => {
-                this.onSuggestedQuestionClicked(question.videoId);
-            });
-            this.suggestedQuestionsContainer.appendChild(button);
-        });
+        // Deprecated - questions now shown in chat after welcome message
     }
     
     onSuggestedQuestionClicked(videoId) {
@@ -112,7 +201,7 @@ class VideoChatApp {
         // Play button click
         this.playButton.addEventListener('click', () => {
             this.videoPlayer.play().catch(error => {
-                console.log('Video play failed:', error);
+                console.error('Error playing video:', error);
             });
         });
         
@@ -129,6 +218,11 @@ class VideoChatApp {
             this.showPlayButton();
         });
         
+        // Auto-resize textarea
+        this.questionInput.addEventListener('input', (e) => {
+            e.target.style.height = 'auto';
+            e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+        });
         
         // Video error handling is now handled in playVideo method
     }
@@ -137,22 +231,47 @@ class VideoChatApp {
         if (this.videoFlow && this.videoFlow.videos.length > 0) {
             // Start playing the first video
             this.playVideo(0);
+        } else {
+            // Show default welcome video if video flow is not available
+            this.showDefaultWelcomeVideo();
         }
     }
     
+    showDefaultWelcomeVideo() {
+        // Set a default video source for the intro
+        const defaultVideoSrc = "https://storage.googleapis.com/qudemo-videos/videos/video_intro.mp4";
+        this.videoPlayer.src = defaultVideoSrc;
+        this.videoPlayer.load();
+        
+        // Update progress display
+        this.currentProgressSpan.textContent = "1";
+        this.totalVideosSpan.textContent = "1";
+    }
+    
     playVideo(index) {
+        console.log('playVideo called with index:', index);
+        console.log('videoFlow available:', !!this.videoFlow);
+        console.log('videos available:', this.videoFlow ? this.videoFlow.videos.length : 0);
+        
+        // Check if video flow is available
+        if (!this.videoFlow || !this.videoFlow.videos) {
+            console.log('Video flow not available, using fallback video');
+            this.showDefaultWelcomeVideo();
+            return;
+        }
+        
         if (index >= this.videoFlow.videos.length) {
             this.showCompletion();
             return;
         }
         
         const video = this.videoFlow.videos[index];
+        console.log('Playing video:', video);
         this.currentVideoIndex = index;
-        this.currentVideoSpan.textContent = index + 1;
+        this.currentProgressSpan.textContent = index + 1;
         
-        // Update progress bar
-        const progress = ((index + 1) / this.videoFlow.videos.length) * 100;
-        this.progressFill.style.width = `${progress}%`;
+        // Update progress display (text-based, not bar)
+        // Progress bar not available in current HTML structure
         
         // Hide question overlay and show play button
         this.hideQuestion();
@@ -175,8 +294,8 @@ class VideoChatApp {
                 // Don't show error for autoplay restrictions, just log it
                 if (error.name === 'NotAllowedError') {
                     console.log('Autoplay blocked by browser. User needs to interact first.');
-                    // Add a subtle indicator that video is ready to play
-                    this.videoPlayer.style.cursor = 'pointer';
+                    // Show play button overlay
+                    this.showPlayButton();
                 } else {
                     this.showError('Error playing video. Please check the video file.');
                 }
@@ -310,7 +429,7 @@ class VideoChatApp {
             if (activeCue) {
                 overlay.textContent = activeCue.text;
                 overlay.style.display = 'block';
-            } else {
+        } else {
                 overlay.style.display = 'none';
             }
         };
@@ -414,32 +533,48 @@ class VideoChatApp {
     }
     
     showQuestions(questions) {
-        this.isQuestionVisible = true;
+        if (!questions || questions.length === 0) return;
         
-        // Clear previous questions
-        this.questionBox.innerHTML = '';
+        // Show questions as suggested buttons in chat
+        const container = document.createElement('div');
+        container.className = 'suggested-questions-container';
         
-        // Create a button for each question
+        const wrapper = document.createElement('div');
+        wrapper.className = 'suggested-questions-wrapper';
+        
+        const label = document.createElement('div');
+        label.className = 'suggested-label';
+        label.textContent = 'What would you like to know next?';
+        wrapper.appendChild(label);
+        
+        const list = document.createElement('div');
+        list.className = 'suggested-questions-list';
+        
         questions.forEach(question => {
-            const button = document.createElement('button');
-            button.className = 'question-btn';
-            button.textContent = question.text;
-            button.addEventListener('click', () => {
+            const btn = document.createElement('button');
+            btn.className = 'suggested-question-btn';
+            btn.textContent = question.text;
+            btn.onclick = () => {
+                this.addChatMessage(question.text, 'User');
                 this.onQuestionClicked(question.nextVideo);
-            });
-            this.questionBox.appendChild(button);
+            };
+            list.appendChild(btn);
         });
         
-        this.questionOverlay.style.display = 'block';
+        wrapper.appendChild(list);
+        container.appendChild(wrapper);
+        this.chatMessages.appendChild(container);
+        
+        // Scroll to bottom
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
     
     hideQuestion() {
-        this.isQuestionVisible = false;
-        this.questionOverlay.style.display = 'none';
+        // Not needed in new design
     }
     
     showPlayButton() {
-        this.playButtonOverlay.style.display = 'block';
+        this.playButtonOverlay.style.display = 'flex';
     }
     
     hidePlayButton() {
@@ -462,22 +597,13 @@ class VideoChatApp {
     }
     
     showCompletion() {
-        this.hideQuestion();
-        this.showPlayButton();
-        
-        // Simply hide the question overlay when all videos are complete
-        // No completion message needed
+        // Show completion message in chat
+        this.addChatMessage("You've reached the end of this demo! Feel free to ask more questions or click 'Book Meeting' to speak with our team.", 'AI');
     }
     
     showError(message) {
-        this.questionBox.innerHTML = '';
-        const errorButton = document.createElement('button');
-        errorButton.className = 'question-btn';
-        errorButton.style.background = '#f44336';
-        errorButton.textContent = `⚠️ Error: ${message}`;
-        errorButton.onclick = () => location.reload();
-        this.questionBox.appendChild(errorButton);
-        this.questionOverlay.style.display = 'block';
+        // Show error in chat
+        this.addChatMessage(`❌ Error: ${message}. Please refresh the page.`, 'AI');
     }
     
     setupQuestionInput() {
@@ -856,28 +982,34 @@ class VideoChatApp {
         });
     }
     
-    async handleUserQuestion() {
-        const userQuestion = this.questionInput.value.trim();
+    async handleUserQuestion(questionText = null) {
+        const userQuestion = questionText || this.questionInput.value.trim();
         
-        if (!userQuestion) {
+        if (!userQuestion || this.isTyping) {
             return;
         }
-        
+
         console.log('User asked:', userQuestion);
         
-        // Show loading state
-        this.answerBox.innerHTML = `
-            <div style="text-align: center;">
-                <strong>🤔 Thinking...</strong>
-            </div>
-        `;
-        this.answerBox.className = 'answer-box';
-        this.answerBox.style.display = 'block';
-        this.askButton.disabled = true;
-        this.askButton.textContent = '...';
+        // Add user message to chat if not already added
+        if (!questionText) {
+            this.addChatMessage(userQuestion, 'User');
+        }
         
+        // Clear input
+        this.questionInput.value = '';
+        
+        // Show typing indicator
+        this.isTyping = true;
+        this.typingIndicator.style.display = 'block';
+        this.askButton.disabled = true;
+        
+        // Scroll to bottom
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+
         try {
             // Call backend API to match question using OpenAI
+            console.log('Calling API with question:', userQuestion);
             const response = await fetch('/api/match-question', {
                 method: 'POST',
                 headers: {
@@ -886,103 +1018,83 @@ class VideoChatApp {
                 body: JSON.stringify({ userQuestion })
             });
             
+            console.log('API response status:', response.status);
             const result = await response.json();
+            console.log('API result:', result);
             
+                // Hide typing indicator
+                this.isTyping = false;
+                this.typingIndicator.style.display = 'none';
+                
                 if (result.matched) {
                     // Found a match!
-                    const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
+                    if (this.videoFlow && this.videoFlow.videos) {
+                        const matchedVideo = this.videoFlow.videos.find(v => v.id === result.videoId);
 
-                    if (matchedVideo) {
-                        // Check if it's a fallback video
-                        if (result.isFallback || result.confidence === 'fallback') {
-                            this.answerBox.innerHTML = `
-                                <div class="not-found">
-                                    <strong>🤔 I'm not sure about that</strong><br/>
-                                    I don't have a specific answer to "${this.questionInput.value}", but let me show you what I can help with!
-                                    <br/><small style="opacity: 0.7; margin-top: 8px; display: block;">
-                                        You can ask me about Qudemo, pricing, security, features, and more!
-                                    </small>
-                                </div>
-                            `;
-                            this.answerBox.className = 'answer-box not-found';
+                        if (matchedVideo) {
+                            // Check if it's a fallback video
+                            if (result.isFallback || result.confidence === 'fallback') {
+                                const aiResponse = "I'm not sure about that specific question, but I can connect you with our sales team or help you with other questions about Qudemo, pricing, security, and features!";
+                                this.addChatMessage(aiResponse, 'AI');
+                            } else {
+                                const aiResponse = matchedVideo.answer || `Playing video: ${matchedVideo.title || matchedVideo.question}`;
+                                this.addChatMessage(aiResponse, 'AI');
+                            }
+
+                            // Play the matched video
+                            const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
+                            if (videoIndex !== -1) {
+                                this.playVideo(videoIndex);
+                                // Force play after user interaction
+                                setTimeout(() => {
+                                    this.videoPlayer.play().catch(error => {
+                                        if (error.name === 'NotAllowedError') {
+                                            this.showPlayButton();
+                                        }
+                                    });
+                                }, 100);
+                            }
                         } else {
-                            this.answerBox.innerHTML = `
-                                <div class="success">
-                                    <strong>✅ Found answer!</strong><br/>
-                                    Playing video: "${matchedVideo.title || matchedVideo.question}"
-                                    ${result.confidence ? `<br/><small style="opacity: 0.7;">Confidence: ${result.confidence}</small>` : ''}
-                                </div>
-                            `;
-                            this.answerBox.className = 'answer-box success';
+                            this.addChatMessage("I couldn't find a matching video. Try asking another question!", 'AI');
                         }
-                        
-                        this.answerBox.style.display = 'block';
-
-                        // Play the matched video
-                        const videoIndex = this.videoFlow.videos.findIndex(v => v.id === result.videoId);
-                        if (videoIndex !== -1) {
-                            this.playVideo(videoIndex);
-                        }
-
-                        // Clear input
-                        this.questionInput.value = '';
-
-                        // Hide answer after a few seconds (longer for fallback)
-                        const hideDelay = result.isFallback ? 5000 : 3000;
-                        setTimeout(() => {
-                            this.answerBox.style.display = 'none';
-                        }, hideDelay);
                     } else {
-                        this.showNoMatchMessage();
+                        // Video flow not available, show fallback response
+                        this.addChatMessage("I understand your question, but I'm having trouble loading the video content. Please try refreshing the page.", 'AI');
                     }
                 } else {
-                    this.showNoMatchMessage();
+                    this.addChatMessage("I'm not sure about that. You can ask me about Qudemo, pricing, security, or other features!", 'AI');
                 }
         } catch (error) {
             console.error('Error matching question:', error);
-            // Fallback to local matching
+            
+            // Hide typing indicator
+            this.isTyping = false;
+            this.typingIndicator.style.display = 'none';
+            
+            // Try fallback matching
             const matchedVideo = this.findMatchingVideo(userQuestion);
             
             if (matchedVideo) {
-                this.answerBox.innerHTML = `
-                    <div class="success">
-                        <strong>✅ Found answer!</strong><br/>
-                        Playing video: "${matchedVideo.title || matchedVideo.question}"
-                    </div>
-                `;
-                this.answerBox.className = 'answer-box success';
-                this.answerBox.style.display = 'block';
+                const aiResponse = matchedVideo.answer || `Here's the answer about: ${matchedVideo.title || matchedVideo.question}`;
+                this.addChatMessage(aiResponse, 'AI');
                 
                 const videoIndex = this.videoFlow.videos.findIndex(v => v.id === matchedVideo.id);
                 if (videoIndex !== -1) {
                     this.playVideo(videoIndex);
                 }
-                
-                this.questionInput.value = '';
-                
-                setTimeout(() => {
-                    this.answerBox.style.display = 'none';
-                }, 3000);
             } else {
-                this.showNoMatchMessage();
+                this.addChatMessage("Sorry, I encountered an error. Please try asking your question again!", 'AI');
             }
         } finally {
             this.askButton.disabled = false;
-            this.askButton.textContent = 'Ask';
         }
     }
     
     showNoMatchMessage() {
-        this.answerBox.innerHTML = `
-            <div class="not-found">
-                <strong>🤔 I'm not sure of the answer</strong><br/>
-                <p style="margin-top: 8px; font-size: 13px;">
-                    I couldn't find a matching question. Try asking in a different way or choose from the suggested questions below.
-                </p>
-            </div>
-        `;
-        this.answerBox.className = 'answer-box not-found';
-        this.answerBox.style.display = 'block';
+        // Now handled in chat messages
+        this.isTyping = false;
+        this.typingIndicator.style.display = 'none';
+        this.addChatMessage("I'm not sure about that specific question. Try asking in a different way!", 'AI');
     }
     
     findMatchingVideo(userQuestion) {
